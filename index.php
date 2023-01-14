@@ -188,10 +188,10 @@ if(preg_match("/^[\/\#\!]?(join) (.*)$/i", $msgOrig)){
     $id = $text[2];
     try {
     yield $this->channels->joinChannel(['channel' => "$id"]);
-    yield $this->messages->sendMessage(['peer' => $chat_id, 
+    yield $this->messages->sendMessage(['peer' => $chatID, 
     'message' => '✅ 𝗷𝗼𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹.',]);
     } catch(Exception $e){
-    yield $this->messages->sendMessage(['peer' => $chat_id, 
+    yield $this->messages->sendMessage(['peer' => $chatID, 
     'message' => '❗️<code>'.$e->getMessage().'</code>',
     'parse_mode'=>'html',]);
 }}
@@ -200,45 +200,55 @@ if(preg_match("/^[\/\#\!]?(left) (.*)$/i", $msgOrig)){
     $id = $text[2];
     try {
     yield $this->channels->leaveChannel(['channel' => "$id"]);
-    yield $this->messages->sendMessage(['peer' => $chat_id, 
+    yield $this->messages->sendMessage(['peer' => $chatID, 
     'message' => '🚫 𝗘𝘅𝗶𝘁 𝗖𝗵𝗮𝗻𝗻𝗲𝗹.',]);
     } catch(Exception $e){
-    yield $this->messages->sendMessage(['peer' => $chat_id, 
+    yield $this->messages->sendMessage(['peer' => $chatID, 
     'message' => '❗️<code>'.$e->getMessage().'</code>',
     'parse_mode'=>'html',]);
 }}
 }
 
-if (isset($data['channel'][$msgOrig])){
+if ($chat_id == $data['channel']){
 
-if(strstr($text,'vmess:')){
-yield $this->messages->sendMessage([
-    'peer' => "@V2RayTtzbot", 
-    'message' => "$msgOrig",
+if(strstr($msgOrig,'vmess:')){
+yield $this->messages->forwardMessages([
+'from_peer' => 
+"$peer", 
+'to_peer' => "@V2RayTzbot",
+'id' => [$message_id],
  ]);
 }
 if(strstr($msgOrig,'vless:')){
-yield $this->messages->sendMessage([
-    'peer' => "@V2RayTtzbot", 
-    'message' => "$msgOrig",
+yield $this->messages->forwardMessages([
+'from_peer' => 
+"$peer", 
+'to_peer' => "@V2RayTzbot",
+'id' => [$message_id],
  ]);
 }
 if(strstr($msgOrig,'trojan:')){
-yield $this->messages->sendMessage([
-    'peer' => "@V2RayTtzbot", 
-    'message' => "$msgOrig",
+yield $this->messages->forwardMessages([
+'from_peer' => 
+"$peer", 
+'to_peer' => "@V2RayTzbot",
+'id' => [$message_id],
  ]);
 }
 if(strstr($msgOrig,'ss:')){
-yield $this->messages->sendMessage([
-    'peer' => "@V2RayTtzbot", 
-    'message' => "$msgOrig",
+yield $this->messages->forwardMessages([
+'from_peer' => 
+"$peer", 
+'to_peer' => "@V2RayTzbot",
+'id' => [$message_id],
  ]);
 }
 if(strstr($msgOrig,'proxy?')){
-yield $this->messages->sendMessage([
-    'peer' => "@V2RayTtzbot", 
-    'message' => "$msgOrig",
+yield $this->messages->forwardMessages([
+'from_peer' => 
+"$peer", 
+'to_peer' => "@V2RayTzbot",
+'id' => [$message_id],
  ]);
 }
 }
