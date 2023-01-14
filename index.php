@@ -200,16 +200,16 @@ if(preg_match("/^[\/\#\!]?(left) (.*)$/i", $msgOrig)){
     $id = $text[2];
     try {
     yield $this->channels->leaveChannel(['channel' => "$id"]);
-    yield $this->messages->sendMessage(['peer' => $chatID, 
+    yield $this->messages->sendMessage(['peer' => $chat_id, 
     'message' => '🚫 𝗘𝘅𝗶𝘁 𝗖𝗵𝗮𝗻𝗻𝗲𝗹.',]);
     } catch(Exception $e){
-    yield $this->messages->sendMessage(['peer' => $chatID, 
+    yield $this->messages->sendMessage(['peer' => $chat_id, 
     'message' => '❗️<code>'.$e->getMessage().'</code>',
     'parse_mode'=>'html',]);
 }}
 }
 
-if ($chat_id == $data['channel']){
+if( isset($data['channel'][$chat_id])){
 
 if(strstr($msgOrig,'vmess:')){
     yield $this->messages->sendMessage([
