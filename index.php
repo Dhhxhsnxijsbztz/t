@@ -248,31 +248,41 @@ if(isset($data['channel'][$chat_id])){
     if(strpos($msgOrig,"vmess:") !== false){
     yield $this->messages->sendMessage([
     'peer' => "5729039106", 
-    'message' => "$msgOrig",
+    'message' => "
+    Config :
+    $msgOrig",
     ]);
     }
     if(strpos($msgOrig,"vless:") !== false){
     yield $this->messages->sendMessage([
     'peer' => "5729039106", 
-    'message' => "$msgOrig",
+    'message' => "
+    Config :
+    $msgOrig",
     ]);
     }
     if(strpos($msgOrig,"trojan:") !== false){
     yield $this->messages->sendMessage([
     'peer' => "5729039106", 
-    'message' => "$msgOrig",
+    'message' => "
+    Config :
+    $msgOrig",
     ]);
     }
     if(strpos($msgOrig,"ss:") !== false){
     yield $this->messages->sendMessage([
     'peer' => "5729039106", 
-    'message' => "$msgOrig",
+    'message' => "
+    Config :
+    $msgOrig",
     ]);
     }
-    if(strpos($msgOrig,"proxy:") !== false){
+    if(strpos($msgOrig,"proxy?") !== false){
     yield $this->messages->sendMessage([
     'peer' => "5729039106", 
-    'message' => "$msgOrig",
+    'message' => "
+    Proxy :
+    $msgOrig",
     ]);
     }
 }
