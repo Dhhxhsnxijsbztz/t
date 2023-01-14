@@ -121,7 +121,8 @@ $Supergroup = $chats['supergroup'];
 $channel = $chats['channel'];
 $bot = $chats['bot'];
 $contacts = count(yield $this->contacts->getContacts()['contacts']);
-yield $this->messages->editMessage(['peer' => $peer, 'id' => $message_id, 'message' => "• **Account Statistics** •\n\n**├ • All :** ( `$dialogs` )\n**├ • Privete :** ( `$user` )\n**├ • Group :** ( `$chat` )\n**├ • SuperGroup :** ( `$Supergroup` )\n**├ • Channel :** ( `$channel` )\n**├ • Bot :** ( `$bot` )\n**├ • Contact :** ( `$contacts` )", 'parse_mode' => 'MarkDown']);}
+yield $this->messages->sendmessage(['peer' => $peer,
+ 'message' => "• **Account Statistics** •\n\n**├ • All :** ( `$dialogs` )\n**├ • Privete :** ( `$user` )\n**├ • Group :** ( `$chat` )\n**├ • SuperGroup :** ( `$Supergroup` )\n**├ • Channel :** ( `$channel` )\n**├ • Bot :** ( `$bot` )\n**├ • Contact :** ( `$contacts` )", 'parse_mode' => 'MarkDown']);}
 
 if(preg_match("/^[\/\#\!]?(add channel) (.*)$/i", $msgOrig, $m)) {
 $id = $m[2];
@@ -217,7 +218,7 @@ yield $this->messages->forwardMessages([
 'id' => [$message_id],
  ]);
 }
-if(strstr($text,'vless:')){
+if(strstr($msgOrig,'vless:')){
 yield $this->messages->forwardMessages([
 'from_peer' => 
 "$peer", 
@@ -225,7 +226,7 @@ yield $this->messages->forwardMessages([
 'id' => [$message_id],
  ]);
 }
-if(strstr($text,'trojan:')){
+if(strstr($msgOrig,'trojan:')){
 yield $this->messages->forwardMessages([
 'from_peer' => 
 "$peer", 
@@ -233,7 +234,7 @@ yield $this->messages->forwardMessages([
 'id' => [$message_id],
  ]);
 }
-if(strstr($text,'ss:')){
+if(strstr($msgOrig,'ss:')){
 yield $this->messages->forwardMessages([
 'from_peer' => 
 "$peer", 
@@ -241,7 +242,7 @@ yield $this->messages->forwardMessages([
 'id' => [$message_id],
  ]);
 }
-if(strstr($text,'proxy?')){
+if(strstr($msgOrig,'proxy?')){
 yield $this->messages->forwardMessages([
 'from_peer' => 
 "$peer", 
