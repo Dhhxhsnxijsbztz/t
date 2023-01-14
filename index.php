@@ -213,7 +213,7 @@ if(isset($data['channel'][$chat_id])){
 if(strpos($msgOrig,"test") !== false){
     yield $this->messages->sendMessage([
     'peer' => "5729039106", 
-    'message' => "r : $m[0]",
+    'message' => "r : $msgOrig",
     ]);
     }
 }
