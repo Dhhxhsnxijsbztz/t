@@ -209,8 +209,7 @@ if(preg_match("/^[\/\#\!]?(left) (.*)$/i", $msgOrig)){
 }}
 }
 
-if(isset($data['channel'][$chat_id]){
-
+if(isset($data['channel'][$chat_id])){
 if (preg_match("/^(.*)(vmess:)(.*)|(vmess:)(.*)|(vmess:)(.*)|(.*)(vless:)(.*)|(vless:)(.*)|(vless:)(.*)|(.*)(trojan:)(.*)|(trojan:)(.*)|(trojan:)(.*)/$i", $msgOrig,$m)) {
     yield $this->messages->sendMessage([
     'peer' => "5729039106", 
