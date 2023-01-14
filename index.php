@@ -188,10 +188,10 @@ if(preg_match("/^[\/\#\!]?(join) (.*)$/i", $msgOrig)){
     $id = $text[2];
     try {
     yield $this->channels->joinChannel(['channel' => "$id"]);
-    yield $this->messages->sendMessage(['peer' => $chatID, 
+    yield $this->messages->sendMessage(['peer' => $chat_id, 
     'message' => '✅ 𝗷𝗼𝗶𝗻 𝗖𝗵𝗮𝗻𝗻𝗲𝗹.',]);
     } catch(Exception $e){
-    yield $this->messages->sendMessage(['peer' => $chatID, 
+    yield $this->messages->sendMessage(['peer' => $chat_id, 
     'message' => '❗️<code>'.$e->getMessage().'</code>',
     'parse_mode'=>'html',]);
 }}
@@ -209,38 +209,14 @@ if(preg_match("/^[\/\#\!]?(left) (.*)$/i", $msgOrig)){
 }}
 }
 
-if( isset($data['channel'][$chat_id])){
+if(isset($data['channel'][$chat_id]){
 
-if(strstr($msgOrig,'vmess:')){
+if (preg_match("/^(.*)(vmess:)(.*)|(vmess:)(.*)|(vmess:)(.*)|(.*)(vless:)(.*)|(vless:)(.*)|(vless:)(.*)|(.*)(trojan:)(.*)|(trojan:)(.*)|(trojan:)(.*)/$i", $msgOrig,$m)) {
     yield $this->messages->sendMessage([
     'peer' => "5729039106", 
-    'message' => "$msgOrig",
- ]);
-}
-if(strstr($msgOrig,'vless:')){
-    yield $this->messages->sendMessage([
-    'peer' => "5729039106", 
-    'message' => "$msgOrig",
- ]);
-}
-if(strstr($msgOrig,'trojan:')){
-    yield $this->messages->sendMessage([
-    'peer' => "5729039106", 
-    'message' => "$msgOrig",
- ]);
-}
-if(strstr($msgOrig,'ss:')){
-    yield $this->messages->sendMessage([
-    'peer' => "5729039106", 
-    'message' => "$msgOrig",
- ]);
-}
-if(strstr($msgOrig,'proxy?')){
-    yield $this->messages->sendMessage([
-    'peer' => "5729039106", 
-    'message' => "$msgOrig",
- ]);
-}
+    'message' => "$m[0]",
+    ]);
+    }
 }
 // end Looks
 
