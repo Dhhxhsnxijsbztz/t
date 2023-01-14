@@ -82,8 +82,7 @@ if((in_array($fromId, $DeveloperTz)) or $fromId == $me_id) {
 // @MrDevTz - @SiNo_Tz
 
 if(preg_match('/^[\/\#\!\.]?(bot|ربات|بات)$/si', $msgOrig)) {
-yield $this->messages->editMessage(['peer' => $peer,
-'id' => $message_id,
+yield $this->messages->sendMessage(['peer' => $peer,
 'message' => '<b>What ‽</b>',
     'parse_mode'      => "HTML"]);
 }
@@ -96,8 +95,7 @@ $stoptime = microtime(true);
 fclose($file);
 $ping = floor(($stoptime - $starttime) * 1000);
 $load         = sys_getloadavg()[0];
-yield $this->messages->editMessage(['peer' => $peer,
-'id' => $message_id,
+yield $this->messages->sendMessage(['peer' => $peer,
 'message' => "
 <b>Load Host : $load Ms
 Telegram Ping : $ping Ms</b>",
@@ -105,8 +103,7 @@ Telegram Ping : $ping Ms</b>",
 }
 
 if(preg_match('/^[\/\#\!\.]?(restart|ریست|ریستارت)$/si', $msgOrig)) {
-yield $this->messages->editMessage(['peer' => $peer,
-'id' => $message_id,
+yield $this->messages->sendMessage(['peer' => $peer,
 'message' => '<b>Restart.</b>',
     'parse_mode'      => "HTML"]);
 file_put_contents('data/lastupdate.txt', time());
@@ -129,13 +126,13 @@ yield $this->messages->editMessage(['peer' => $peer, 'id' => $message_id, 'messa
 if(preg_match("/^[\/\#\!]?(add channel) (.*)$/i", $msgOrig, $m)) {
 $id = $m[2];
 if (!isset($data['channel'][$id])) {
-
+$data['channel'][$id]= $id;
+put("data.json", json_encode($data));
 yield $this->messages->sendMessage([
 'peer' => $chat_id,
-'message' => "❕Channel: $id was added to the database ✅.",
+'message' => "❕$id was added to the database ✅.",
 ]);
-$data['channel'] = $id;
-put("data.json", json_encode($data));
+
 }else{
 yield $this->messages->sendMessage([
 'peer' => $chat_id,
@@ -146,13 +143,12 @@ yield $this->messages->sendMessage([
 if(preg_match("/^[\/\#\!]?(delete channel) (.*)$/i", $msgOrig, $m)) {
 $id = $m[2];
 if (isset($data['channel'][$id])) {
-
-yield $this->messages->sendMessage([
-'peer' => $chat_id,
-'message' => "❕Channel: $id was removed from the database ✅.",
-]);
 unset($data['channel'][$id]);
 put("data.json", json_encode($data));
+yield $this->messages->sendMessage([
+'peer' => $chat_id,
+'message' => "❕$id was removed from the database ✅.",
+]);
 }else{
 yield $this->messages->sendMessage([
 'peer' => $chat_id,
